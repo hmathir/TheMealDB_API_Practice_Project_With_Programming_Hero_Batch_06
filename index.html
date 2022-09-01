@@ -28,16 +28,24 @@
                             <a class="nav-link" href="#">About</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search">
+                    <div class="d-flex" role="search">
                         <input id="search-input" class="form-control me-2" type="search" placeholder="Search"
                             aria-label="Search">
                         <button id="search-btn" class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
     <main>
+        <!-- Loading Spinner -->
+        <section id="loading-div" class="text-center d-none">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </section>
+        <!-- Loading Spinner End -->
+
         <!-- MEAL CARD SECTION, CARD CAME FROM API -->
         <section class="container mt-5">
             <div id="parent-meal-view" class="row row-cols-1 row-cols-md-4 g-4">
@@ -59,6 +67,12 @@
             </div>
         </section>
         <!-- MODAL SECTION ENDED -->
+
+
+
+        <h1 id="meal-found" class="text-black text-center d-none">NO MEAL FOUND</h1>
+
+
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"

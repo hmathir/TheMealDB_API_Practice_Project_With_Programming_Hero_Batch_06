@@ -8,12 +8,17 @@ const loadMeal = async (searchValue) => {
 
 loadMeal('');
 
-
 //Write a function for display meal data which got from 'loadMeal' function.
 const displayMeals = (meals) => {
     const mealCardParent = document.getElementById('parent-meal-view');
+    if(meals?.length == undefined){
+        noData(true);
+    }
+    else{
+        noData(false);
+    }
     mealCardParent.innerHTML = ''; //Clear card Field after new search
-    meals.forEach(meal => {
+    meals?.forEach(meal => {
         const mealCard = document.createElement('div');
         mealCard.classList.add('col');
         mealCard.innerHTML = `
@@ -29,13 +34,20 @@ const displayMeals = (meals) => {
     </div>`;
     mealCardParent.appendChild(mealCard);
     })
+    loading(false);
 }
 
 
 //Added Search Input And Button And Call 'loadMeal' Function using Search Button
 document.getElementById('search-btn').addEventListener('click', function(){
+
     const getSearchFeildValue = document.getElementById('search-input');
     searchValue = getSearchFeildValue.value;
+    if(searchValue == ''){
+        noData(true);
+        return;
+    }
+    loading(true);
     loadMeal(searchValue);
     getSearchFeildValue.value = ''; //Clear Search Field after press this button
 })
@@ -71,4 +83,29 @@ const displaySingleMealDetails = (meal) => {
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     </div>`;
 modalParent.appendChild(newModalDiv);
+}
+
+
+//Spinner/Loading Function
+const loading = (isLoading) => {
+    const loadingDiv = document.getElementById('loading-div');
+    if(isLoading == true){
+        loadingDiv.classList.remove('d-none');
+
+    }
+    else{
+        loadingDiv.classList.add('d-none');
+    }
+}
+
+
+//NO DATA FOUND
+const noData = (isNoData) => {
+    const noFound = document.getElementById('meal-found');
+    if(isNoData){
+        noFound.classList.remove('d-none');
+    }
+    else{
+        noFound.classList.add('d-none');
+    }
 }
