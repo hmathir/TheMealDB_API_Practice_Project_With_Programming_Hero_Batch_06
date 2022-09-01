@@ -23,6 +23,9 @@ const displayMeals = (meals) => {
             <h5 class="card-title">${meal.strMeal}</h5>
             <p class="card-text">${meal.strInstructions.slice(0,150)}</p>
         </div>
+        <button onclick="details(${meal.idMeal})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mealDetailsModal">
+            View Meal Details
+        </button>
     </div>`;
     mealCardParent.appendChild(mealCard);
     })
@@ -36,3 +39,36 @@ document.getElementById('search-btn').addEventListener('click', function(){
     loadMeal(searchValue);
     getSearchFeildValue.value = ''; //Clear Search Field after press this button
 })
+
+//Write this function for fetch Data using Meal ID from modal button click
+const details = async (mealID) => {
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`);
+    const meal = await response.json();
+    displaySingleMealDetails(meal.meals[0]);
+}
+
+//Write This function for display single meal details on modal.
+const displaySingleMealDetails = (meal) => {
+    const modalParent = document.getElementById('modal-parent');
+    modalParent.innerHTML = '';
+    const newModalDiv = document.createElement('div');
+    newModalDiv.classList.add('modal-content');
+    newModalDiv.innerHTML = `
+    <div class="modal-header">
+        <h5 class="modal-title" id="mealDetailsModalTitle">${meal.strMeal}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <img src="${meal.strMealThumb}" width="300">
+        <hr>
+        <p>Category: ${meal.strCategory}</p>
+        <hr>
+        <p>Area: ${meal.strArea}</p>
+        <hr>
+        <p>${meal.strInstructions}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>`;
+modalParent.appendChild(newModalDiv);
+}
