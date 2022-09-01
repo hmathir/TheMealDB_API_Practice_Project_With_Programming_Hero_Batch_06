@@ -12,6 +12,7 @@ loadMeal('');
 //Write a function for display meal data which got from 'loadMeal' function.
 const displayMeals = (meals) => {
     const mealCardParent = document.getElementById('parent-meal-view');
+    mealCardParent.innerHTML = ''; //Clear card Field after new search
     meals.forEach(meal => {
         const mealCard = document.createElement('div');
         mealCard.classList.add('col');
@@ -26,3 +27,12 @@ const displayMeals = (meals) => {
     mealCardParent.appendChild(mealCard);
     })
 }
+
+
+//Added Search Input And Button And Call 'loadMeal' Function using Search Button
+document.getElementById('search-btn').addEventListener('click', function(){
+    const getSearchFeildValue = document.getElementById('search-input');
+    searchValue = getSearchFeildValue.value;
+    loadMeal(searchValue);
+    getSearchFeildValue.value = ''; //Clear Search Field after press this button
+})
